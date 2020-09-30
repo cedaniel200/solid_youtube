@@ -1,0 +1,27 @@
+
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group 'com.cedaniel200'
+version '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+mainClassName = "com.cedaniel200.solid.App"
+
+task solidJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Principios SOLID',
+                'Main-Class': 'com.cedaniel200.solid.App'
+    }
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
