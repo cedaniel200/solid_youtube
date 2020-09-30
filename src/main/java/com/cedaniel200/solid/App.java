@@ -6,12 +6,12 @@ public class App {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int opcion;
-        limpiar();
-        menu();
+        limpiarConsola();
+        imprimirMenu();
         do {
             opcion = scanner.nextInt();
-            limpiar();
-            menu();
+            limpiarConsola();
+            imprimirMenu();
             if (opcion == 1) {
                 System.out.println(" [] ");
                 System.out.println("----|====");
@@ -27,9 +27,10 @@ public class App {
                 System.out.println(" /\\");
             }
         } while (opcion != 0);
+        System.out.println("Que la fuerza te acompa\u00f1e");
     }
 
-    private static void limpiar() {
+    private static void limpiarConsola() {
         if (System.getProperty("os.name").contains("Windows")) {
             try {
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
@@ -41,7 +42,7 @@ public class App {
         }
     }
 
-    private static void menu() {
+    private static void imprimirMenu() {
         System.out.println("----- Jedi -----");
         System.out.println("0 Terminar");
         System.out.println("1 Encender sable");
