@@ -1,27 +1,45 @@
-
 plugins {
     id 'java'
     id 'application'
 }
 
-group 'com.cedaniel200'
-version '1.0.0'
+group = 'com.cedaniel200'
+version = '1.0.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
 
 repositories {
     mavenCentral()
 }
 
-mainClassName = "com.cedaniel200.solid.App"
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.14.4'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
 
-task solidJar(type: Jar) {
+application {
+    mainClass = 'com.cedaniel200.solid.App'
+}
+
+tasks.named('run') {
+    standardInput = System.in
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+tasks.register('solidJar', Jar) {
+    archiveClassifier = 'all'
     manifest {
         attributes 'Implementation-Title': 'Principios SOLID',
                 'Main-Class': 'com.cedaniel200.solid.App'
     }
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-    with jar
-}
-
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    from sourceSets.main.output
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
